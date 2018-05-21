@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document type="BLUMIND" editor_version="3.2.902.24361" document_version="3.0.0.0">
+  <!--Create by Blumind, you can download it free from http://www.blumind.org-->
+  <information>
+    <author>Administrator</author>
+    <company>
+    </company>
+    <version>3.0</version>
+    <description>
+    </description>
+  </information>
+  <attributes>
+    <item name="editor_show_sidebar">True</item>
+  </attributes>
+  <charts active_chart="0">
+    <chart name="新页面 1" type="MindMap">
+      <remark>
+      </remark>
+      <layout>MIND_MAP</layout>
+      <style>
+        <back_color>#EFECCA</back_color>
+        <fore_color>#002F2F</fore_color>
+        <line_color>#A7A37E</line_color>
+        <border_color>#A7A37E</border_color>
+        <node_back_color>#E6E2AF</node_back_color>
+        <node_fore_color>#002F2F</node_fore_color>
+        <select_color>#046380</select_color>
+        <hover_color>#046380</hover_color>
+        <link_line_color>#046380</link_line_color>
+        <widget_margin>1</widget_margin>
+        <picture_thumb_size>100, 100</picture_thumb_size>
+      </style>
+      <nodes>
+        <node id="1" text="明星工作室网站开发与设计" x="636" y="377" width="177" height="42" text_b="12, 12, 153, 18">
+          <style>
+            <back_color>#046380</back_color>
+            <fore_color>Black</fore_color>
+            <border_color>#002F2F</border_color>
+            <padding>12</padding>
+          </style>
+          <nodes>
+            <node id="39" text="文件设计表" x="486" y="75" width="70" height="22" text_b="2, 2, 66, 18" fold_btn_b="472, 80, 13, 13">
+              <nodes>
+                <node id="40" text="根路径server" x="325" y="75" width="81" height="22" folded="True" text_b="2, 2, 77, 18" fold_btn_b="311, 80, 13, 13">
+                  <nodes>
+                    <node id="48" text="app.js" x="11807" y="6555" width="43" height="22" text_b="2, 2, 39, 18" />
+                    <node id="49" text="chet.js" x="11804" y="6587" width="46" height="22" text_b="2, 2, 42, 18" />
+                    <node id="50" text="bussiness" x="11785" y="6667" width="65" height="22" text_b="2, 2, 61, 18" fold_btn_b="11771, 6672, 13, 13">
+                      <nodes>
+                        <node id="51" text="configs" x="11654" y="6619" width="51" height="22" text_b="2, 2, 47, 18" />
+                        <node id="52" text="models" x="11653" y="6651" width="52" height="22" text_b="2, 2, 48, 18" />
+                        <node id="53" text="schames" x="11646" y="6683" width="59" height="22" text_b="2, 2, 55, 18" />
+                        <node id="54" text="shotMsg" x="11645" y="6715" width="60" height="22" text_b="2, 2, 56, 18" />
+                      </nodes>
+                      <lines>
+                        <line target="51" begin_side="Left" end_side="Right" begin_rect="11772, 6667, 78, 22" end_rect="11654, 6619, 51, 22" />
+                        <line target="52" begin_side="Left" end_side="Right" begin_rect="11772, 6667, 78, 22" end_rect="11653, 6651, 52, 22" />
+                        <line target="53" begin_side="Left" end_side="Right" begin_rect="11772, 6667, 78, 22" end_rect="11646, 6683, 59, 22" />
+                        <line target="54" begin_side="Left" end_side="Right" begin_rect="11772, 6667, 78, 22" end_rect="11645, 6715, 60, 22" />
+                      </lines>
+                    </node>
+                    <node id="41" text="sessions" x="11793" y="6747" width="57" height="22" text_b="2, 2, 53, 18" />
+                    <node id="42" text="views" x="11809" y="6779" width="41" height="22" text_b="2, 2, 37, 18" />
+                    <node id="43" text="bin" x="11823" y="6811" width="27" height="22" text_b="2, 2, 23, 18" />
+                    <node id="44" text="router" x="11805" y="6843" width="45" height="22" text_b="2, 2, 41, 18" />
+                    <node id="45" text="public" x="11805" y="6875" width="45" height="22" text_b="2, 2, 41, 18" />
+                  </nodes>
+                  <lines />
+                </node>
+              </nodes>
+              <lines>
+                <line target="40" begin_side="Left" end_side="Right" begin_rect="473, 75, 83, 22" end_rect="325, 75, 81, 22" />
+              </lines>
+            </node>
+            <node id="2" text="功能设计" x="498" y="427" width="58" height="22" text_b="2, 2, 54, 18" fold_btn_b="484, 432, 13, 13">
+              <nodes>
+                <node id="3" text="前端" x="385" y="251" width="33" height="22" text_b="2, 2, 29, 18" fold_btn_b="371, 256, 13, 13">
+                  <nodes>
+                    <node id="47" text="找回密码功能" x="222" y="155" width="83" height="22" text_b="2, 2, 79, 18" />
+                    <node id="4" text="管理员功能" x="235" y="187" width="70" height="22" text_b="2, 2, 66, 18" />
+                    <node id="5" text="身份改变功能" x="222" y="219" width="83" height="22" text_b="2, 2, 79, 18" />
+                    <node id="6" text="明星动态分享功能" x="198" y="251" width="107" height="22" text_b="2, 2, 103, 18" />
+                    <node id="7" text="聊天功能" x="247" y="283" width="58" height="22" text_b="2, 2, 54, 18" />
+                    <node id="8" text="登录功能" x="247" y="315" width="58" height="22" text_b="2, 2, 54, 18" />
+                    <node id="9" text="注册功能" x="247" y="347" width="58" height="22" text_b="2, 2, 54, 18" />
+                  </nodes>
+                  <lines>
+                    <line target="47" begin_side="Left" end_side="Right" begin_rect="372, 251, 46, 22" end_rect="222, 155, 83, 22" />
+                    <line target="4" begin_side="Left" end_side="Right" begin_rect="372, 251, 46, 22" end_rect="235, 187, 70, 22" />
+                    <line target="5" begin_side="Left" end_side="Right" begin_rect="372, 251, 46, 22" end_rect="222, 219, 83, 22" />
+                    <line target="6" begin_side="Left" end_side="Right" begin_rect="372, 251, 46, 22" end_rect="198, 251, 107, 22" />
+                    <line target="7" begin_side="Left" end_side="Right" begin_rect="372, 251, 46, 22" end_rect="247, 283, 58, 22" />
+                    <line target="8" begin_side="Left" end_side="Right" begin_rect="372, 251, 46, 22" end_rect="247, 315, 58, 22" />
+                    <line target="9" begin_side="Left" end_side="Right" begin_rect="372, 251, 46, 22" end_rect="247, 347, 58, 22" />
+                  </lines>
+                </node>
+                <node id="12" text="后端" x="385" y="459" width="33" height="22" text_b="2, 2, 29, 18" fold_btn_b="371, 464, 13, 13">
+                  <nodes>
+                    <node id="13" text="动态分享模块" x="222" y="379" width="83" height="22" text_b="2, 2, 79, 18" />
+                    <node id="14" text="聊天模块" x="247" y="411" width="58" height="22" text_b="2, 2, 54, 18" />
+                    <node id="15" text="修改密码模块" x="222" y="443" width="83" height="22" text_b="2, 2, 79, 18" />
+                    <node id="16" text="注册模块" x="247" y="475" width="58" height="22" text_b="2, 2, 54, 18" />
+                    <node id="17" text="登录模块" x="247" y="507" width="58" height="22" text_b="2, 2, 54, 18" />
+                    <node id="18" text="身份验证模块" x="222" y="539" width="83" height="22" text_b="2, 2, 79, 18" />
+                  </nodes>
+                  <lines>
+                    <line target="13" begin_side="Left" end_side="Right" begin_rect="372, 459, 46, 22" end_rect="222, 379, 83, 22" />
+                    <line target="14" begin_side="Left" end_side="Right" begin_rect="372, 459, 46, 22" end_rect="247, 411, 58, 22" />
+                    <line target="15" begin_side="Left" end_side="Right" begin_rect="372, 459, 46, 22" end_rect="222, 443, 83, 22" />
+                    <line target="16" begin_side="Left" end_side="Right" begin_rect="372, 459, 46, 22" end_rect="247, 475, 58, 22" />
+                    <line target="17" begin_side="Left" end_side="Right" begin_rect="372, 459, 46, 22" end_rect="247, 507, 58, 22" />
+                    <line target="18" begin_side="Left" end_side="Right" begin_rect="372, 459, 46, 22" end_rect="222, 539, 83, 22" />
+                  </lines>
+                </node>
+                <node id="19" text="数据库" x="372" y="635" width="46" height="22" text_b="2, 2, 42, 18" fold_btn_b="358, 640, 13, 13">
+                  <nodes>
+                    <node id="1" text="动态分享表" x="204" y="571" width="88" height="22" text_b="2, 2, 66, 18">
+                      <widgets>
+                        <widget type="NOTES" x="69" y="3" width="16" height="16" align="Right" hyperlink="" display_index="0" padding="0">
+                          <text>&lt;P&gt;动态分享表 &lt;/P&gt;
+&lt;P&gt;id:用户的账户&lt;/P&gt;
+&lt;P&gt;content:数组记录用户的动态&lt;/P&gt;</text>
+                        </widget>
+                      </widgets>
+                    </node>
+                    <node id="2" text="用户状态表" x="204" y="603" width="88" height="22" text_b="2, 2, 66, 18">
+                      <widgets>
+                        <widget type="NOTES" x="69" y="3" width="16" height="16" align="Right" hyperlink="" display_index="0" padding="0">
+                          <text>&lt;P&gt;记录用户的当前状态,在用户登陆后将用户信息写入此表,供聊天系统写入&lt;/P&gt;
+&lt;P&gt;_id:用户的id&lt;/P&gt;
+&lt;P&gt;state:用户的状态:&amp;nbsp; 1:已登录 2:已与聊天服务器建立连接 3:不接收消息&lt;/P&gt;</text>
+                        </widget>
+                      </widgets>
+                    </node>
+                    <node id="21" text="聊天记录表" x="204" y="635" width="88" height="22" text_b="2, 2, 66, 18">
+                      <widgets>
+                        <widget type="NOTES" x="69" y="3" width="16" height="16" align="Right" hyperlink="" display_index="0" padding="0">
+                          <text>&lt;P&gt;存储用户产生的聊天记录&lt;/P&gt;
+&lt;P&gt;_id 记录的发送方&lt;/P&gt;
+&lt;P&gt;received&amp;nbsp;聊天记录的接受方,当为明星账户时指代群聊&lt;/P&gt;
+&lt;P&gt;msg:聊天记录&lt;/P&gt;
+&lt;P&gt;sendTime:发送的时间&lt;/P&gt;
+&lt;P&gt;&amp;nbsp;&lt;/P&gt;</text>
+                        </widget>
+                      </widgets>
+                    </node>
+                    <node id="22" text="验证码表" x="216" y="667" width="76" height="22" text_b="2, 2, 54, 18">
+                      <widgets>
+                        <widget type="NOTES" x="57" y="3" width="16" height="16" align="Right" hyperlink="" display_index="0" padding="0">
+                          <text>&lt;P&gt;验证码表,用于存储用户申请的验证码&lt;/P&gt;
+&lt;P&gt;&amp;nbsp;_id:&amp;nbsp;申请注册的用户名,手机号&lt;/P&gt;
+&lt;P&gt;code:存储用户的验证码,6位&lt;BR&gt;&lt;/P&gt;
+&lt;P&gt;createAt:Date:时间,建立TLD索引,60s自动删除&lt;/P&gt;</text>
+                        </widget>
+                      </widgets>
+                    </node>
+                    <node id="23" text="用户表" x="228" y="699" width="64" height="22" text_b="2, 2, 42, 18">
+                      <widgets>
+                        <widget type="NOTES" x="45" y="3" width="16" height="16" align="Right" hyperlink="" display_index="0" padding="0">
+                          <text>&lt;P&gt;用户表设计,记录用户的基本信息&lt;/P&gt;
+&lt;P&gt;_id字段,帐号,手机号,11位,建立索引&lt;/P&gt;
+&lt;P&gt;password:用户密码,8位以上&lt;/P&gt;
+&lt;P&gt;nickname:用户昵称&lt;/P&gt;
+&lt;P&gt;sex:用户性别 1:男 2:女&lt;/P&gt;
+&lt;P&gt;identity:用户身份字段 1:普通 2:明星 3:管理员&lt;/P&gt;
+&lt;P&gt;follow:关注列表 数组,存放关注的_id&lt;/P&gt;
+&lt;P&gt;friend:朋友列表,对象,键为分组名,值为数组:包含_id&lt;/P&gt;</text>
+                        </widget>
+                      </widgets>
+                    </node>
+                  </nodes>
+                  <lines>
+                    <line target="1" begin_side="Left" end_side="Right" begin_rect="359, 635, 59, 22" end_rect="204, 571, 88, 22" />
+                    <line target="2" begin_side="Left" end_side="Right" begin_rect="359, 635, 59, 22" end_rect="204, 603, 88, 22" />
+                    <line target="21" begin_side="Left" end_side="Right" begin_rect="359, 635, 59, 22" end_rect="204, 635, 88, 22" />
+                    <line target="22" begin_side="Left" end_side="Right" begin_rect="359, 635, 59, 22" end_rect="216, 667, 76, 22" />
+                    <line target="23" begin_side="Left" end_side="Right" begin_rect="359, 635, 59, 22" end_rect="228, 699, 64, 22" />
+                  </lines>
+                </node>
+              </nodes>
+              <lines>
+                <line target="3" begin_side="Left" end_side="Right" begin_rect="485, 427, 71, 22" end_rect="385, 251, 33, 22" />
+                <line target="12" begin_side="Left" end_side="Right" begin_rect="485, 427, 71, 22" end_rect="385, 459, 33, 22" />
+                <line target="19" begin_side="Left" end_side="Right" begin_rect="485, 427, 71, 22" end_rect="372, 635, 46, 22" />
+              </lines>
+            </node>
+            <node id="24" text="技术" x="893" y="387" width="33" height="22" folded="True" text_b="2, 2, 29, 18" fold_btn_b="927, 392, 13, 13">
+              <nodes>
+                <node id="25" text="数据库" x="115914" y="62974" width="46" height="22" folded="True" text_b="2, 2, 42, 18" fold_btn_b="115961, 62979, 13, 13">
+                  <nodes>
+                    <node id="26" text="mongodb" x="120855" y="66548" width="67" height="22" text_b="2, 2, 63, 18" />
+                  </nodes>
+                  <lines />
+                </node>
+                <node id="27" text="前端" x="115914" y="63006" width="33" height="22" folded="True" text_b="2, 2, 29, 18" fold_btn_b="115948, 63011, 13, 13">
+                  <nodes>
+                    <node id="28" text="javascript" x="121514" y="66994" width="64" height="22" text_b="2, 2, 60, 18" fold_btn_b="121500, 66999, 13, 13">
+                      <nodes>
+                        <node id="29" text="jQuery" x="121386" y="66962" width="48" height="22" text_b="2, 2, 44, 18" />
+                        <node id="30" text="ES5" x="121404" y="66994" width="30" height="22" text_b="2, 2, 26, 18" />
+                        <node id="31" text="bootstrap" x="121368" y="67026" width="66" height="22" text_b="2, 2, 62, 18" />
+                      </nodes>
+                      <lines>
+                        <line target="29" begin_side="Left" end_side="Right" begin_rect="121501, 66994, 77, 22" end_rect="121386, 66962, 48, 22" />
+                        <line target="29" begin_side="Left" end_side="Right" begin_rect="121501, 66994, 77, 22" end_rect="121404, 66994, 30, 22" />
+                        <line target="29" begin_side="Left" end_side="Right" begin_rect="121501, 66994, 77, 22" end_rect="121368, 67026, 66, 22" />
+                      </lines>
+                    </node>
+                    <node id="32" text="CSS" x="121547" y="67058" width="31" height="22" text_b="2, 2, 27, 18" fold_btn_b="121533, 67063, 13, 13">
+                      <nodes>
+                        <node id="33" text="sass" x="121435" y="67058" width="32" height="22" text_b="2, 2, 28, 18" />
+                      </nodes>
+                      <lines>
+                        <line target="33" begin_side="Left" end_side="Right" begin_rect="121534, 67058, 44, 22" end_rect="121435, 67058, 32, 22" />
+                      </lines>
+                    </node>
+                    <node id="34" text="HTML5" x="121527" y="67090" width="51" height="22" text_b="2, 2, 47, 18" />
+                  </nodes>
+                  <lines />
+                </node>
+                <node id="35" text="后端" x="115914" y="63038" width="33" height="22" folded="True" text_b="2, 2, 29, 18" fold_btn_b="115948, 63043, 13, 13">
+                  <nodes>
+                    <node id="36" text="gulp" x="122724" y="67352" width="35" height="22" text_b="2, 2, 31, 18" />
+                    <node id="37" text="nodeJS" x="122724" y="67384" width="51" height="22" text_b="2, 2, 47, 18" />
+                    <node id="38" text="express" x="122724" y="67416" width="53" height="22" text_b="2, 2, 49, 18" />
+                  </nodes>
+                  <lines />
+                </node>
+              </nodes>
+              <lines />
+            </node>
+          </nodes>
+          <lines>
+            <line target="39" begin_side="Left" end_side="Right" begin_rect="636, 377, 177, 42" end_rect="486, 75, 70, 22" />
+            <line target="2" begin_side="Left" end_side="Right" begin_rect="636, 377, 177, 42" end_rect="498, 427, 58, 22" />
+            <line target="24" begin_side="Right" end_side="Left" begin_rect="636, 377, 177, 42" end_rect="893, 387, 33, 22" />
+          </lines>
+        </node>
+      </nodes>
+    </chart>
+  </charts>
+</document>

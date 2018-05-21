@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/public.css">
+<link rel="stylesheet" type="text/css" href="css/regeist.css">
+
+<body data-spy="scroll" data-target="#leftBar">
+    <div class="login_head_bg">
+        <div class="login_head">
+            <a href="javascript:;">
+                <!-- <img src="img/logo3.jpg"> -->
+            </a>
+        </div>
+    </div>
+    <div class="regeist_con_bg">
+        <div class="regeist_con">
+           <form action="javascript:;" class="regeist" method="post">
+               <p><label>用户名:</label><input type="text" name="userName" class="userId"><span></span></p>
+               <p><label>设置密码:</label><input type="password" name="passwd" class="passwd"><span></span></p>
+               <p><label>确认密码:</label><input type="password" name="passwd2" class="passwd2"><span></span></p>
+               <p><label>手机号码:</label><input type="text" name="userId" class="phone"><span></span></p>
+               <p class="move"><label>滑动验证:</label><span class="move_box"><b class="moveBg"></b><i class="block"></i>请按住滑块,滑动到最右</span><span id="move_span">请完成滑动验证</span></p>
+               <p class="msg"><label>短信验证码:</label><input type="text" name="regMsg" class="message"><span></span><button id="getMsgBtn">获取短信验证码</button></p>
+               <p class="sub"><label></label><input type="submit" name="submit"></p>
+           </form>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/regeistStatic.js"></script>
+    <script type="text/javascript" src="js/regeistDynamic.js"></script>
+</body>
+</html>
