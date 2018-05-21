@@ -40,9 +40,15 @@ class Model{
             this.model.find('.loading').css('display','none');
             this.model.find('.alertMsg').fadeIn('slow').find('.alertMsgCon').text(alertMsgCon);
         }
+        // 阻止页面滚动
+        $(document).on('mousewheel',this.pervent);
+    }
+    pervent() {   //阻止页面滚动函数
+        return false;
     }
     // 隐藏模态框的方法
     hide() {
+        $(document).off('mousewheel',this.pervent);  //取消阻止页面滚动
         this.model.css('display', 'none');
     }
     change(fnName,fn) {
@@ -58,3 +64,6 @@ class Model{
         this.notOk = this.hide;
     }
 }
+
+
+

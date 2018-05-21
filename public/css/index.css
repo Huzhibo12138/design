@@ -121,6 +121,8 @@ body{
 }
 .con_left .share_box .tit_box .user_pic img{
     margin: 10px 15px 0 10px;
+    width:40px;
+    height: 40px;
 }
 .con_left .share_box .tit_box .user_name{
     font-size: 18px;

@@ -14,7 +14,6 @@ const db = mongoose();
 const indexRouter = require('./routes/index');
 const regeistRouter = require('./routes/regeist');
 const loginRouter = require('./routes/login');
-// const c = require('./routes/createShareMsg');
 
 
 // 实例化express对象
@@ -52,7 +51,6 @@ app.use('/login',loginRouter);
 
 
 
-// app.use('/login',c);
 app.all('/favicon', (req,res) => {
     res.send('我们没有没有favicon');
 });
@@ -75,4 +73,7 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// const c = require('./routes/createShareMsg');
+// app.use('/login',c);
 

@@ -1,17 +1,23 @@
 // 此文件主要处理与服务器交互的逻辑
 
+
 // 1.初始化界面函数,分为两部分,未传参数时,拿取默认动态,传入userId时拿取用户关心的数据
 function reFreshWindow(userMsg) {
-	if(!userMsg) {  // 没有用户信息,用户未登录,拿取默认的动态供用户浏览
-		writeUserName('新的游客');
-		reqShareMsg(); //拿取默认动态
-	}
+	if(userMsg.id == 'nothing') {  // 没有用户信息,用户未登录,拿取默认的动态供用户浏览
+		writeUserName(userMsg);
+		reqShareMsg(userMsg); //拿取默认动态
+	}else{
+    }
 }
 // 1.1初始化用户姓名,头像
 function writeUserName(userName) {
-	$('.headerUserName').text(userName);
-	$('.owner_name').text(userName);
-	$('.owner_pic').find('img').attr('src','../img/heart.jpg');
+    if(userMsg.id == 'nothing') {
+        $('.headerUserName').text('新的游客');
+        $('.owner_name').text('新的游客');
+        $('.owner_pic').find('img').attr('src','../img/heart.jpg');
+    }else{
+
+    }
 }
 // 1.2初始化动态消息，传入信息,生成分享框并插入到页面
 function createMsg(msg) {
@@ -47,46 +53,34 @@ function createMsg(msg) {
     });
     $('.con_left').append(shareBox);
 }
-
-
 // 1.3 向服务器发起请求,请求数据,支持参数,_id,用户的id
-function reqShareMsg(follow) {
-	follow = follow || 'id=nothing';
-	$.ajax({
-		url:'index/getShareMsg',
-		type:'get',
-		data:follow,
-		success:handelShareMsg,
-		timeout:1000 * 15,  //15秒延迟
-		beforeSend:()=>{model.show()},
-		complete:(data) => {
-			if(data.readyState === 0 || data.status !== 200) {
-        		model.show('数据获取失败,请重试');
-        		model.change('ok',() => {
-        			reqShareMsg(follow);
-        		});
-        	}
-		},
-	});
-}
-
-var msg = {
-	ownPic:'img/headpic.jpg',
-	ownName:'莫关于',
-	time:'5.21',
-	con:'这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容这是分享的内容',
-	talk:'5123',
-	good:'123',
-	imgs:['img/chet_bg.jpg','img/chet_bg.jpg','img/chet_bg.jpg','img/chet_bg.jpg','img/chet_bg.jpg'],
+function reqShareMsg(userMsg) {
+    $.ajax({
+        url:'index/getShareMsg',
+        type:'get',
+        data:userMsg,
+        success:handelShareMsg,
+        timeout:1000 * 15,  //15秒延迟
+        beforeSend:()=>{model.show()},
+        complete:(data) => {
+            if(data.readyState === 0 || data.status !== 200) {
+                model.show('数据获取失败,请重试');
+                model.change('ok',() => {
+                    reqShareMsg(userMsg);
+                });
+            }
+        },
+    });
 }
 // 1.4 处理后台返回的数据
 function handelShareMsg(data) {
 	model.hide();
 	data = data || [];
-	data.forEach((v,k) => {
+    userMsg.newMsgIsOver = true;
+    data.forEach( v => {
 		var msg = {
-			ownPic:'img/headpic.jpg',
-			ownName:123,
+			ownPic:'userImgs/' + v.headPic,
+			ownName:v.name,
 			time:v.time,
 			con:v.con,
 			talk:'123',
@@ -97,7 +91,7 @@ function handelShareMsg(data) {
 	});
 }
 // 1.初始化界面
-reFreshWindow();
+reFreshWindow(userMsg);
 
 // 2.登录事件
 $('.login_form').submit(function() {

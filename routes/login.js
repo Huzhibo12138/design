@@ -5,9 +5,9 @@ const router = express.Router();
 const User = require('../business/models/user');
 const LoginUser = require('../business/models/loginUser');
 // 处理登录请求的流程 1:校验数据,查库 2.用户入登录库
-router.post('/',checkmsg,wirteDb);
+router.post('/',checkMsg,wirteDb);
 
-function checkmsg(req,res,next) {
+function checkMsg(req,res,next) {
     // 格式化请求信息
     let userMsg = {
         _id:req.body._id,
