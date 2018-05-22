@@ -38,6 +38,7 @@ function wirteDb(req,res,next) {
             res.json({code:1,err:'登录失败,是否已经登录过了?或请重试...'});
         }else{
             res.json({code:0,err:'登录成功',userMsg:userMsg});
+            console.log(userMsg);
         }
     });
 }

@@ -515,3 +515,87 @@ body{
 .login_bg .login_box .login_con .nowReg a{
     text-decoration: none;
 }
+
+.my_follow_bg{
+    position: fixed;
+    margin:auto;
+    left: 0;
+    top:0;
+    bottom: 0;
+    right: 0;
+    width: 500px;
+    height: 500px;
+    background: #fefefe;
+    z-index: 1000;
+    border-radius: 10px;
+    box-shadow: 4px 4px 14px rgba(0,0,0,0.8);
+    padding: 15px 15px;
+    overflow-y:auto;
+}
+.my_follow_title{
+    width:100%;
+    height:40px;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 9px;
+    position: relative;
+}
+.my_follow_title a{
+    display: block;
+    position: absolute;
+    right:20px;
+    top:10px;
+    width:36px;
+    height: 36px;
+    border: 4px solid #000000;
+    border-radius: 100%;
+    text-decoration: none;
+    text-align: center;
+    line-height: 28px;
+    font-size: 22px;
+    color: #000;
+}
+.my_follow_title a:hover{
+    border: 4px solid red;
+    color: red;
+}
+.my_follow_list{
+    width: 100%;
+    height: auto;
+    padding-top: 25px;
+    text-align: center;
+}
+.my_follow_list:after{
+    content: '';
+    height: 0;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+.my_follow_list li{
+    width:33%;
+    float: left;
+    padding: 10px 0;
+}
+.my_follow_list li img{
+    width:40px;
+    height: 40px;
+    cursor: pointer;
+}
+.my_follow_list li p{
+    font-size: 16px;
+    line-height: 30px;
+}
+.my_follow_list li button{
+    width: 90px;
+    height: 30px;
+    border: 0;
+    background: #df8812;
+    border-radius: 8px;
+    color: #fefefe;
+    box-shadow: 2px 2px 7px #000000;
+}
+.my_follow_list li button:hover{
+    background: #df88f2;
+}

@@ -14,6 +14,7 @@ const db = mongoose();
 const indexRouter = require('./routes/index');
 const regeistRouter = require('./routes/regeist');
 const loginRouter = require('./routes/login');
+const followRouter = require('./routes/follow');
 
 
 // 实例化express对象
@@ -48,7 +49,8 @@ app.use('/index',indexRouter);
 app.use('/regeist',regeistRouter);
 // 处理登录请求
 app.use('/login',loginRouter);
-
+// 处理关注请求
+app.use('/follow',followRouter);
 
 
 app.all('/favicon', (req,res) => {

@@ -1,28 +1,39 @@
 // 此文件主要处理与服务器交互的逻辑
-
-
-// 1.初始化界面函数,分为两部分,未传参数时,拿取默认动态,传入userId时拿取用户关心的数据
-function reFreshWindow(userMsg) {
-	if(userMsg.id == 'nothing') {  // 没有用户信息,用户未登录,拿取默认的动态供用户浏览
-		writeUserName(userMsg);
-		reqShareMsg(userMsg); //拿取默认动态
-	}else{
+class Share{
+    constructor() {
+        this.initUserMsg();
+        this.writerUserName();
+        this.reqShareMsg();
     }
-}
-// 1.1初始化用户姓名,头像
-function writeUserName(userName) {
-    if(userMsg.id == 'nothing') {
-        $('.headerUserName').text('新的游客');
-        $('.owner_name').text('新的游客');
-        $('.owner_pic').find('img').attr('src','../img/heart.jpg');
-    }else{
-
+    // 初始化用户信息
+    initUserMsg() {
+        this.userMsg = $.cookie('userMsg');
+        if(this.userMsg == "{}" || !this.userMsg) {
+            this.userMsg = {
+                _id:'nothing',
+                page:0,
+                newMsgIsOver:true,
+                follow:[],
+            }
+        }else{
+            this.userMsg = JSON.parse(this.userMsg);
+        }
     }
-}
-// 1.2初始化动态消息，传入信息,生成分享框并插入到页面
-function createMsg(msg) {
-	// 生成文档的内容
-	var conStr = `<div class="share_box">
+    // 重置用户姓名,头像等信息
+    writerUserName() {
+        if(this.userMsg._id == 'nothing') {
+            $('.headerUserName').text('新的游客');
+            $('.owner_name').text('新的游客');
+            $('.owner_pic').find('img').attr('src','../img/heart.jpg');
+        }else{
+            $('.headerUserName').text('我是' + this.userMsg.name);
+            $('.owner_name').text(this.userMsg.name);
+            $('.owner_pic').find('img').attr('src','../img/heart.jpg');
+        }
+    }
+    // 生成文档的内容
+    createMsg(msg) {
+	    var conStr = `<div class="share_box" data="${msg.id}">
             <div class="tit_box">
                 <a href="javascript:;" class="user_pic">
                     <img src="${msg.ownPic}" alt="">
@@ -45,100 +56,106 @@ function createMsg(msg) {
             </div>
         </div>`;
     // 插入图片
-    var shareBox = $(conStr);
-    var share_pic_box = shareBox.find('.share_pic_box');
-    msg.imgs.forEach((v) => {
-    	var imgStr = `<div><img src="${v}"></div>`;
-    	share_pic_box.append($(imgStr));
-    });
-    $('.con_left').append(shareBox);
-}
-// 1.3 向服务器发起请求,请求数据,支持参数,_id,用户的id
-function reqShareMsg(userMsg) {
-    $.ajax({
-        url:'index/getShareMsg',
-        type:'get',
-        data:userMsg,
-        success:handelShareMsg,
-        timeout:1000 * 15,  //15秒延迟
-        beforeSend:()=>{model.show()},
-        complete:(data) => {
-            if(data.readyState === 0 || data.status !== 200) {
-                model.show('数据获取失败,请重试');
-                model.change('ok',() => {
-                    reqShareMsg(userMsg);
-                });
-            }
-        },
-    });
-}
-// 1.4 处理后台返回的数据
-function handelShareMsg(data) {
-	model.hide();
-	data = data || [];
-    userMsg.newMsgIsOver = true;
-    data.forEach( v => {
-		var msg = {
-			ownPic:'userImgs/' + v.headPic,
-			ownName:v.name,
-			time:v.time,
-			con:v.con,
-			talk:'123',
-			good:'123',
-			imgs:v.imgs,
-		}
-		createMsg(msg);
-	});
-}
-// 1.初始化界面
-reFreshWindow(userMsg);
-
-// 2.登录事件
-$('.login_form').submit(function() {
-	// 格式化请求数据
-	var userMsg = {
-		_id:this.userId.value,
-		password:this.password.value,
-	}
-	var userIdReg =  /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;
-	if(!userIdReg.test(userMsg._id)) {
-		model.show('手机号输入有误,请检查');
-		return false;
-	}else if(userMsg.password.length <6 || userMsg.password.length > 12){
-		model.show('密码格式有误,请检查');
-		return false;
-	}
-	// 发送登录请求
-	$.ajax({
-		url:'login',
-        data:userMsg,
-        dataType:'json',
-        timeout:1000 * 10,
-        type:'post',
-        beforeSend:() =>{model.show()},
-        success:loginSuccess,
-        complete:(data) => {
-        	if(data.readyState === 0) {
-        		model.show('服务器开小差了,请重试');
-        	}
+        var shareBox = $(conStr);
+        var share_pic_box = shareBox.find('.share_pic_box');
+        msg.imgs.forEach((v) => {
+    	    var imgStr = `<div><img src="${v}"></div>`;
+    	    share_pic_box.append($(imgStr));
+        });
+        $('.con_left').append(shareBox);
+    }
+    // 请求新的动态
+    reqShareMsg() {
+        if(this.userMsg._id == 'nothing') {
+            var url = 'index/getDefaultShareMsg';
+        }else{
+            var url = 'index/getFollowShareMsg';
         }
-	});
-});
-// 2.1.登录成功的回调函数
-function loginSuccess(data) {
-	if(data.code === 0) {
-		userMsg = data.userMsg;
-		// 新用户提示
-		if(userMsg.newUser) {
-			var welMsg = '您好,亲爱的' + userMsg.name + ',欢迎您登录,检测到您还有一些信息并未完善,是否立即填写?';
-			model.show(welMsg);
-			// model.change('ok',() => {window.location.href=''});
-			// 初始化界面
-			reFreshWindow(userMsg);
-		}
-	}else{
-		model.show(data.err);
-	}
+        $.ajax({
+            url:url,
+            type:'get',
+            data:this.userMsg,
+            success:this.handelShareMsg.bind(this),
+            timeout:1000 * 15,  //15秒延迟
+            beforeSend:()=>{model.show()},
+            complete:(data) => {
+                if(data.readyState === 0 || data.status !== 200) {
+                    model.show('数据获取失败,请重试');
+                    model.change('ok',() => {
+                        this.reqShareMsg(this.userMsg);
+                    });
+                }
+            },
+        });
+    }
+    // 处理后台返回的动态信息
+    handelShareMsg(data) {  //根据数据生成shareBox
+        data = data || [];
+        this.userMsg.newMsgIsOver = true;
+        data.forEach( v => {
+            var msg = {
+                ownPic:'userImgs/' + v.headPic,
+                ownName:v.name,
+                time:v.time,
+                con:v.con,
+                talk:'123',
+                good:'123',
+                imgs:v.imgs,
+                id:v.userId,
+            }
+            this.createMsg(msg);
+        });
+        model.hide();
+    }
+    reLoadPage() {
+        $('.share_box').remove();
+        this.writerUserName();
+        this.reqShareMsg();
+    }
+    follow(user) {
+        var followMsg = {
+          user:this.userMsg._id,
+          follow:user,
+        };
+        if(this.userMsg.follow.indexOf(followMsg.follow) !== -1) {
+            model.show(`亲爱的${this.userMsg.name},该用户您已经关注过了!!!`);
+            return false;
+        }
+        if(followMsg.user == 'nothing') {
+            model.show('亲爱的游客,您还没有登录,是否登录??');
+            model.change('ok',() => {
+                $('.login_bg').css('display','block');
+                model.hide();
+            });
+        }else{
+            $.ajax({
+                url:'follow',
+                data:followMsg,
+                beforeSend:model.show(),
+                timeout:1000 * 10,
+                complete:(data) => {
+                    if(data.readyState === 0 || data.status !== 200) {
+                        model.show('关注失败,请重试!!!');
+                        model.change('ok',() => {
+                            this.reqShareMsg(this.userMsg);
+                        });
+                    }
+                },
+                success:(data) => {
+                    if(data.code == 0) {
+                        model.show('关注成功!!!');
+                        this.userMsg.follow.push(followMsg.follow);
+                    }else{
+                        model.show(data.err);
+                    }
+                },
+            });
+        }
+    }
 }
+
+
+
+
 
 

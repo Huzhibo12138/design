@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const router = express.Router();
 
@@ -7,15 +8,15 @@ const ShareMsg = require('../business/models/shareMsg');
 
 // 给用户发送信息 工作流程 1；判断用户请求内容
 // 未登录用户：2.1,拿去指定的用户信息,2.2查询发表动态的用户信息并发送数据
-router.get('/getShareMsg',searchShareMsg,searchUser);
+router.get('/getDefaultShareMsg',searchDefaultShareMsg,searchUser);
+router.get('/getFollowShareMsg',searchFollowShareMsg,searchUser);
 
-function searchShareMsg(req,res,next) {
+function searchDefaultShareMsg(req,res,next) {
     // 格式化请求内容
     let reqMsg = {
-        userId:req.query.id,
+        userId:req.query._id,
         page:parseInt(req.query.page) || 0,
     }
-    console.log(reqMsg);
     if(reqMsg.userId === 'nothing') {  // 无用户，推送默认信息
         ShareMsg.find({},(err,data) => {
             if(err || !data) {
@@ -26,6 +27,8 @@ function searchShareMsg(req,res,next) {
                 next();
             }
         }).skip(reqMsg.page).limit(10);
+    }else {
+
     }
 }
 
@@ -36,18 +39,37 @@ function searchUser(req,res,next) {
         arrUser.push(v.userId);
     });
     arrUser = [...(new Set(arrUser))]; //数组去重
-    // Model.find({“age”:{ “$in”:[20,21,22.‘haha’]} } );
     let query = {_id:{'$in':arrUser}};
     User.find(query,{name:1,headPic:1},(err,data) => {
         if(err || !data) {
             res.json({code:1,err:'服务器出错，请重试！！'});
         }else{
-            setTimeout(() => {res.json(combineMsg(req.shareMsg,data));},5000);
-            // res.json(combineMsg(req.shareMsg,data));   // 拿到所有的动态发表者的信息
+            res.json(combineMsg(req.shareMsg,data));
         }
     });
 }
 
+
+function searchFollowShareMsg(req,res,next) {
+    // 格式化请求内容
+    let reqMsg = {
+        userId:req.query._id,
+        page:parseInt(req.query.page) || 0,
+    }
+    if(reqMsg.userId) {  // 无用户，推送默认信息
+        ShareMsg.find({},(err,data) => {
+            if(err || !data) {
+                res.json({code:1,err:'服务器出错，请重试！！'});
+            }else{
+                //暂时不会更好的解决方案,查询两次
+                req.shareMsg = data;
+                next();
+            }
+        }).skip(reqMsg.page).limit(10);
+    }else {
+
+    }
+}
 
 
 // 将动态与用户信息组合

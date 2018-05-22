@@ -1,5 +1,7 @@
 // 公共js文件
 // 模态框的函数,封装为对象,通过new的方式运行,采用ES6,不考虑兼容
+
+// 弹出框模块
 class Model{
     //添加静态方法与静态属性
     constructor({loadingMsg,title}) {
@@ -20,9 +22,9 @@ class Model{
                         </div>
                      </div>`;
         this.isNew = true;
+        this.create();
     }
-    // 显示模态框的方法
-    show(alertMsgCon) {
+    create() {
         // 检查是否已经生成
         if(this.isNew) {
             $('body').append($(this.str));
@@ -32,6 +34,10 @@ class Model{
             this.model.find('.notOk').click(() => {this.notOk ? this.notOk() : this.hide()});
             this.isNew = false;
         }
+    }
+    // 显示模态框的方法
+    show(alertMsgCon) {
+        this.reChange();
         this.model.css('display','block');   // 显示出来
         if(!alertMsgCon) {   //若传入需要输出的信息,则显示,否则显示加载图片
             this.model.find('.alertMsg').css('display','none');
@@ -50,6 +56,7 @@ class Model{
     hide() {
         $(document).off('mousewheel',this.pervent);  //取消阻止页面滚动
         this.model.css('display', 'none');
+        this.reChange();
     }
     change(fnName,fn) {
         if(fnName == 'close' || fnName == 'ok' || fnName == 'notOk') {
