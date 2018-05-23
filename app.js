@@ -15,11 +15,11 @@ const indexRouter = require('./routes/index');
 const regeistRouter = require('./routes/regeist');
 const loginRouter = require('./routes/login');
 const followRouter = require('./routes/follow');
+const shareRouter = require('./routes/share');
 
 
 // 实例化express对象
 const app = express();
-
 // 模版引擎
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
@@ -51,6 +51,9 @@ app.use('/regeist',regeistRouter);
 app.use('/login',loginRouter);
 // 处理关注请求
 app.use('/follow',followRouter);
+// 处理动态请求
+app.use('/share',shareRouter);
+
 
 
 app.all('/favicon', (req,res) => {

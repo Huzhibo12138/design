@@ -531,6 +531,7 @@ body{
     box-shadow: 4px 4px 14px rgba(0,0,0,0.8);
     padding: 15px 15px;
     overflow-y:auto;
+    display:none;
 }
 .my_follow_title{
     width:100%;
@@ -598,4 +599,165 @@ body{
 }
 .my_follow_list li button:hover{
     background: #df88f2;
+}
+.send_share_bg{
+    width: 500px;
+    height: 365px;
+    background: #fefefe;
+    position: fixed;
+    left: 0;
+    top:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+    z-index: 500;
+    border-radius: 10px;
+    /*border: 1px solid #666;*/
+    box-shadow: 5px 5px 17px #000000;
+    display: none;
+}
+.send_share_tit{
+    width:100%;
+    height:40px;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 9px;
+    position: relative;
+}
+.send_share_tit a{
+    display: block;
+    position: absolute;
+    right:20px;
+    top:10px;
+    width:36px;
+    height: 36px;
+    border: 4px solid #000000;
+    border-radius: 100%;
+    text-decoration: none;
+    text-align: center;
+    line-height: 28px;
+    font-size: 22px;
+    color: #000;
+}
+.send_share_tit a:hover{
+    border: 4px solid red;
+    color: red;
+}
+.send_share_bg textarea{
+    display: block;
+    resize: none;
+    width:440px;
+    margin:20px auto 0;
+    height:180px;
+    padding: 10px;
+    font-size: 20px;
+    text-indent: 30px;
+    line-height: 35px;
+    border-radius: 8px;
+    outline: none;
+}
+.send_share_bg button{
+    width: 110px;
+    height: 30px;
+    float: right;
+    margin-right: 30px;
+    border: none;
+    background: orange;
+    border-radius: 5px;
+    color:#fefefe;
+}
+.send_share_bg button:hover{
+    background: orangered;
+}
+.send_share_box_picList{
+    width: 100%;
+    height: 85px;
+    overflow: hidden;
+    padding: 10px 25px 0;
+}
+.send_share_box_picList li{
+    width: 70px;
+    height: 70px;
+    float: left;
+    position: relative;
+    padding: 5px;
+    border-radius: 3px;
+    border:1px solid #666;
+    overflow: hidden;
+    margin-right: 5px;
+    margin-bottom: 30px;
+    cursor:pointer;
+}
+.send_share_box_picList li input{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor:pointer;
+    position: absolute;
+    left:5px;
+    top:5px;
+    /*z-index: 100;*/
+}
+.send_share_box_picList li .shadow{
+    width: 70px;
+    height: 70px;
+    background: rgba(0,0,0,0.3);
+    position: absolute;
+    left: 0;
+    top:0;
+    cursor:pointer;
+    z-index:100;
+}
+.send_share_box_picList li .shadow i{
+    display: block;
+    line-height: 1;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    left: 0;
+    top:0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    color:#fefefe;
+    opacity: 0.6;
+}
+.send_share_box_picList li:hover .shadow{
+    background: rgba(0,0,0,0.4);
+    display: none;
+}
+.send_share_box_picList .addPic .shadow{
+    background: rgba(0,0,0,0.4);
+    display: block;
+}
+.send_share_box_picList .addPic:hover .shadow{
+    background: rgba(0,0,0,0.4);
+    display: block;
+}
+.send_share_box_picList li:hover .shadow i{
+    color:#fff;
+}
+.send_share_box_picList li .shadow .delete{
+    display: none;
+}
+.send_share_box_picList li .shadow{
+    display: none;
+}
+.send_share_box_picList li:hover .shadow{
+    display: block;
+}
+.send_share_box_picList li:hover .shadow .delete{
+    display: block;
+}
+.send_share_box_picList li img{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    left: 0;
+    top:0;
+    cursor:pointer;
+}
+.addInputBox{
+    display: none!important;
 }

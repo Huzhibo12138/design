@@ -107,11 +107,13 @@ class Share{
         });
         model.hide();
     }
+    // 重新加载页面
     reLoadPage() {
         $('.share_box').remove();
         this.writerUserName();
         this.reqShareMsg();
     }
+    // 关注用户
     follow(user) {
         var followMsg = {
           user:this.userMsg._id,
@@ -129,7 +131,7 @@ class Share{
             });
         }else{
             $.ajax({
-                url:'follow',
+                url:'follow/addFollow',
                 data:followMsg,
                 beforeSend:model.show(),
                 timeout:1000 * 10,
@@ -152,9 +154,143 @@ class Share{
             });
         }
     }
+    // 获得关注列表
+    askFollowMsg() {
+        if(this.userMsg._id == 'nothing') {
+            return false;
+        }else{
+            var data = {
+                _id:this.userMsg._id,
+            }
+            $.ajax({
+                url:'follow/getFollow',
+                data:data,
+                beforeSend:model.show(),
+                timeout:1000 * 10,
+                complete:(data) => {
+                    if(data.readyState === 0 || data.status !== 200) {
+                        model.show('关注列表获取失败,请重试');
+                        model.change('ok',() => {
+                            this.askFollowMsg();
+                        });
+                    }
+                },
+                success:(data) => {
+                    if(data.code == 0) {
+                        this.createFollow(data.data);
+                        model.hide();
+                    }else{
+                        model.show(data.err);
+                    }
+                },
+
+            });
+        }
+    }
+    // 创建关注列表
+    createFollow(followMsg) {
+        $('.my_follow_list>li').remove();
+            followMsg.forEach(v => {
+                var str = `<li data="${v._id}">
+                               <img src="userImgs/${v.headPic}" alt="">
+                               <p class="name">${v.name}</p>
+                               <button>取消关注</button>
+                           </li>`;
+                $('.my_follow_list').append($(str));
+        });
+    }
+    // 取消关注
+    delFollow(user) {
+        var followMsg = {
+            user:this.userMsg._id,
+            follow:user,
+        };
+        console.log(followMsg);
+        $.ajax({
+            url:'follow/delFollow',
+            data:followMsg,
+            beforeSend:model.show(),
+            timeout:1000 * 30,
+            complete:(data) => {
+                if(data.readyState === 0 || data.status !== 200) {
+                    model.show('取消关注失败,请重试!!!');
+                    model.change('ok',() => {
+                        this.delFollow(user);
+                    });
+                }
+            },
+            success:(data) => {
+                if(data.code == 0) {
+                    model.show('取消关注成功!!!');
+                    this.askFollowMsg();
+                }else{
+                    model.show(data.err);
+                }
+            },
+        });
+    }
+    // 获得我的动态
+    getMyShare() {
+        $.ajax({
+            url:'index/getMyShare',
+            data:this.userMsg,
+            beforeSend:model.show(),
+            timeout:1000 * 10,
+            complete:(data) => {
+                if(data.readyState === 0 || data.status !== 200) {
+                    model.show('我的动态获取失败,请重试');
+                    model.change('ok',() => {
+                        this.getMyShare();
+                    });
+                }
+            },
+            success:(data) => {
+                if(data.code == 0) {
+                    model.hide();
+                    $('.share_box').remove();
+                    data.data.forEach(v => {
+                        this.createMyShare(v);
+                    });
+                }else{
+                    model.show(data.err);
+                }
+            },
+
+        });
+    }
+    createMyShare(msg) {
+        var conStr = `<div class="share_box" data="${msg._id}">
+            <div class="tit_box">
+                <a href="javascript:;" class="user_pic">
+                    <img src="${msg.ownPic}" alt="">
+                </a>
+                <p class="user_name">${msg.ownName}</p>
+                <button class="user_operate delete_share"><i class="glyphicon glyphicon-remove"></i>删除</button>
+                <p class="user_msg">${msg.time}</p>
+            </div>
+            <div class="share_box_con">
+                <p class="share_article">${msg.con}</p>
+                <div class="share_pic_box">
+                    <div><img src="img/chet_bg.jpg"></div>
+                </div>
+            </div>
+            <div class="share_bottom">
+                <ul>
+                    <li><i class="glyphicon glyphicon-comment"></i>评论<span>${msg.talk}</span></li>
+                    <li><i class="glyphicon glyphicon-thumbs-up"></i>${msg.good}</li>
+                </ul>
+            </div>
+        </div>`;
+        // 插入图片
+        var shareBox = $(conStr);
+        var share_pic_box = shareBox.find('.share_pic_box');
+        msg.imgs.forEach((v) => {
+            var imgStr = `<div><img src="${v}"></div>`;
+            share_pic_box.append($(imgStr));
+        });
+        $('.con_left').append(shareBox);
+    }
 }
-
-
 
 
 
