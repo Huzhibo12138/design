@@ -59,11 +59,14 @@ function loginSuccess(data) {
     if(data.code === 0) {
         Object.assign(share.userMsg,data.userMsg);
         share.userMsg.page = 0;
+        console.log(share.userMsg);
+        $.cookie('userMsg',JSON.stringify(share.userMsg));
         $('.login_bg').css('display','none');
         // 新用户提示
         if(share.userMsg.newUser) {
             var welMsg = '您好,亲爱的' + share.userMsg.name + ',欢迎您登录,检测到您还有一些信息并未完善,是否立即填写?';
             model.show(welMsg);
+            model.change('ok',() => { window.location.href = 'supply.html' });
             model.change('notOk',() => {share.reLoadPage()});
             model.change('close',() => {share.reLoadPage()});
         }else{
@@ -124,7 +127,6 @@ function logOutSuccess() {
     $.cookie('userMsg',str);
     share.initUserMsg();
     share.writerUserName();
-    console.log(share.userMsg);
 }
 
 
@@ -142,7 +144,7 @@ $(document).on('scroll',function() {
 $('.con_left').on('click',function(ev) {
     var e = ev || window.event;
     var o = e.target || e.srcElement;
-    if($(o).hasClass('user_operate') || $(o).hasClass('glyphicon-plus')) {
+    if($(o).hasClass('user_operate') && !$(o).hasClass('delete_share') || $(o).hasClass('glyphicon-plus')) {
         var parent = $(o).parents('.share_box');
         var userName = parent.find('.user_name').text();
         var userId = parent.attr('data');
@@ -183,7 +185,6 @@ $('.my_follow_bg').on('click',function(ev) {
     }
 });
 
-
 // 发表动态
 $('.con_right').on('click',function(ev) {
     var e = ev || window.event;
@@ -211,9 +212,7 @@ $('.send_share_box_picList').on('click',function(ev) {
     var o = e.target || e.srcElement;
     var oLi = $(o).parents('li');
     if(oLi.hasClass('delete_pic')){
-        console.log($('.addInputBox')[0].files);
         delete $('.addInputBox')[0].files[0];
-        console.log($('.addInputBox')[0].files);
     }else if($(o).hasClass('send_share_close')){
         $('.send_share_bg').css('display','none');
     }
@@ -266,6 +265,11 @@ $('.send_share_bg button').click(function() {
                 $('.delete_pic').remove();
                 $('.addPic').css('display','block');
                 $('.addInputBox').val('');
+            }else if(data.code == 2){
+                model.show(data.err);
+                model.change('ok',() => {
+                    window.location.href = 'apply.html';
+                });
             }else{
                 model.show(data.err);
             }
@@ -311,7 +315,6 @@ function getObjectURL(file) {
     return url ;
 }
 
-
 // 获得我的动态
 $('.getMyShare').on('click',function() {
     if(share.userMsg._id == 'nothing') {
@@ -326,7 +329,6 @@ $('.getMyShare').on('click',function() {
     }
 });
 
-
 // 无限加载效果
 $(document).on('scroll',function() {
     var top = $(window).scrollTop();
@@ -337,9 +339,40 @@ $(document).on('scroll',function() {
     }
 });
 
+// 删除动态
+$('.con_left').on('click',function(ev) {
+    var e = ev || window.event;
+    var o = e.target || e.srcElement;
+    if($(o).hasClass('delete_share')) {
+        model.show('确定要删除此条动态吗?');
+        model.change('ok',() => {
+            share.deleteMsg($(o).parents('.share_box').attr('data'),$(o).parents('.share_box'));
+            model.hide();
+        });
+    }
+});
 
+// 回到首页
+$('.fontPage').on('click',function() {
+    share.reLoadPage();
+});
 
-// 在页面加载结束后写入cookie记录用户此浏览状态
+// // 点赞效果
+// $('.share_box ')
+
+// 图片放大浏览功能
+$('.con_left').on('click',function(ev) {
+    var o = ev.target;
+    if($(o.parentNode).hasClass('share_pic')) {
+        var imgs = $(o).parents('.share_pic_box').find('img');
+        var bigPic = imgs.map((k,v) => {
+            return $(v).attr('src');
+        });
+        bigPic = new Big_pic(bigPic);
+    }
+});
+
+// 在页面卸载时写入cookie记录用户此浏览状态
 $(window).unload(function(){
     var str = JSON.stringify(share.userMsg);
     $.cookie('userMsg',str,{expires:1});

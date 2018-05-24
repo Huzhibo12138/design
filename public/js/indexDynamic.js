@@ -26,9 +26,9 @@ class Share{
             $('.owner_name').text('新的游客');
             $('.owner_pic').find('img').attr('src','../img/heart.jpg');
         }else{
-            $('.headerUserName').text('我是' + this.userMsg.name);
+            $('.headerUserName').text('我是:' + this.userMsg.name);
             $('.owner_name').text(this.userMsg.name);
-            $('.owner_pic').find('img').attr('src','../img/heart.jpg');
+            $('.owner_pic').find('img').attr('src',this.userMsg.headPic);
         }
     }
     // 生成文档的内容
@@ -45,7 +45,6 @@ class Share{
             <div class="share_box_con">
                 <p class="share_article">${msg.con}</p>
                 <div class="share_pic_box">
-                    <div><img src="img/chet_bg.jpg"></div>
                 </div>
             </div>
             <div class="share_bottom">
@@ -55,11 +54,11 @@ class Share{
                 </ul>
             </div>
         </div>`;
-    // 插入图片
+        // 插入图片
         var shareBox = $(conStr);
         var share_pic_box = shareBox.find('.share_pic_box');
         msg.imgs.forEach((v) => {
-    	    var imgStr = `<div><img src="${v}"></div>`;
+    	    var imgStr = `<div class="share_pic"><img src="${v}"></div>`;
     	    share_pic_box.append($(imgStr));
         });
         $('.con_left').append(shareBox);
@@ -258,11 +257,12 @@ class Share{
 
         });
     }
+    // 创建我的动态
     createMyShare(msg) {
-        var conStr = `<div class="share_box" data="${msg._id}">
+        var conStr = `<div class="share_box" data="${msg.msgNum}">
             <div class="tit_box">
                 <a href="javascript:;" class="user_pic">
-                    <img src="${msg.ownPic}" alt="">
+                    <img src="${msg.headPic}" alt="">
                 </a>
                 <p class="user_name">${msg.ownName}</p>
                 <button class="user_operate delete_share"><i class="glyphicon glyphicon-remove"></i>删除</button>
@@ -271,7 +271,6 @@ class Share{
             <div class="share_box_con">
                 <p class="share_article">${msg.con}</p>
                 <div class="share_pic_box">
-                    <div><img src="img/chet_bg.jpg"></div>
                 </div>
             </div>
             <div class="share_bottom">
@@ -285,13 +284,112 @@ class Share{
         var shareBox = $(conStr);
         var share_pic_box = shareBox.find('.share_pic_box');
         msg.imgs.forEach((v) => {
-            var imgStr = `<div><img src="${v}"></div>`;
+            var imgStr = `<div class="share_pic"><img src="${v}"></div>`;
             share_pic_box.append($(imgStr));
         });
         $('.con_left').append(shareBox);
     }
+    // 删除我的动态
+    deleteMsg(msgNum,share) {
+        var data = {
+            _id:this.userMsg._id,
+            msgNum:msgNum,
+        };
+        $.ajax({
+            url:'index/deleteMyShare',
+            data:data,
+            beforeSend:model.show(),
+            timeout:1000 * 10,
+            complete:(data) => {
+                if(data.readyState === 0 || data.status !== 200) {
+                    model.show('删除失败,请重试');
+                    model.change('ok',() => {
+                        this.deleteMsg(msgNum);
+                    });
+                }
+            },
+            success:(data) => {
+                if(data.code == 0) {
+                    model.show('动态删除成功');
+                    share.remove();
+                }else{
+                    model.show(data.err);
+                }
+            },
+
+        });
+    }
 }
 
+
+class Big_pic{
+    constructor(pics) {
+        this.index = 0;
+        this.create(pics);
+        this.pics = pics;
+    }
+    create(pics) {
+        var str = ` <div class="big_share_pic_bg">
+                        <a href="javascript:;" class="glyphicon glyphicon-remove big_share_close"></a>
+                        <div class="big_pic">
+                            <a href="javascript:;" class="left">
+                                <i class="glyphicon glyphicon-chevron-left"></i>
+                            </a>
+                            <a href="javascript:;" class="right">
+                                <i class="glyphicon glyphicon-chevron-right"></i>
+                            </a>
+                            <img src='${pics[0]}' alt="">
+                        </div>
+                        <div class="sml_pic">
+                            <ul></ul>
+                        </div>
+                    </div>`;
+        this.oBigPicAll = $(str);
+        this.bigPic = this.oBigPicAll.find('.big_pic img');
+        pics.each((k,v) => {
+            var str = `<li class="sml_Pic">
+                            <img src='${v}' alt="">
+                        </li>`;
+            this.oBigPicAll.find('.sml_pic>ul').append($(str));
+        });
+        $('body').append(this.oBigPicAll);
+        this.smlPic = this.oBigPicAll.find('.sml_pic li');
+        $( this.smlPic[0]).addClass('active');
+        this.oBigPicAll.css('display','block');
+        this.oBigPicAll.find('.left').on('click',this.moveLeft.bind(this));
+        this.oBigPicAll.find('.right').on('click',this.moveRight.bind(this));
+        $( this.smlPic).on('click',this.clickPic.bind(this));
+        this.oBigPicAll.find('.big_share_close').on('click',this.close.bind(this));
+    }
+    moveLeft() {
+        this.index--;
+        if(this.index < 0) {
+            this.index = this.pics.length - 1;
+        }
+        this.changeActive(this.index);
+    }
+    moveRight() {
+        this.index++;
+        if(this.index >= this.pics.length) {
+            this.index = 0;
+        }
+        this.changeActive(this.index);
+    }
+    clickPic(ev) {
+        var o = ev.target.parentNode;
+        this.index = $( this.smlPic).index(o);
+        this.changeActive(this.index);
+    }
+    changeActive(index) {
+        $( this.smlPic).removeClass('active');
+        $( this.smlPic).eq(index).addClass('active');
+        this.bigPic.attr('src',this.pics[index]);
+    }
+    close() {
+        $('.big_share_pic_bg').remove();
+        // this = null;
+    }
+}
 
 
 

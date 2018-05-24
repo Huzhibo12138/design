@@ -9,7 +9,8 @@ const LoginUser = require('../business/models/loginUser');
 
 router.get('/getDefaultShareMsg',searchDefaultShareMsg,searchUser);
 router.get('/getFollowShareMsg',searchFollowShareMsg,searchUser);
-router.get('/getMyShare',isLogin,sendShareMsg)
+router.get('/getMyShare',isLogin,sendShareMsg);
+router.get('/deleteMyShare',isLogin,deleteMyShare);
 
 function searchDefaultShareMsg(req,res,next) {
     // 格式化请求内容
@@ -82,20 +83,30 @@ function isLogin(req,res,next) {
 }
 
 function sendShareMsg(req,res,next) {
-    console.log(req.query);
     ShareMsg.find({userId:req.query._id},(err,data) => {
         if(err || !data) {
             res.json({code:1,err:'您的动态获取失败,是否还未发表动态?'});
         }else{
-            let shareMsg = data.map( v => {
-                let msg = JSON.parse(JSON.stringify(v));
-                msg.name = req.query.name;
-                msg.id = v._id;
-                msg.ownPic = 123123;
-                return msg;
+            let shareMsg = data;
+            User.findOne({_id:req.query._id},(err,data) => {
+                if(err || !data) {
+                    res.json({code:1,err:'您的动态获取失败,是否还未注册?'});
+                }else{
+                    let result = shareMsg.map( v => {
+                        return {
+                            msgNum:v._id,
+                            headPic:data.headPic,
+                            ownName:data.name,
+                            time:dateToStr(v.time),
+                            con:v.con,
+                            talk:123,
+                            good:v.good,
+                            imgs:v.imgs,
+                        }
+                    });
+                    res.json({code:0,err:'数据获取成功',data:result});
+                }
             });
-            console.log(shareMsg);
-            res.json({code:0,data:shareMsg});
         }
     });
 }
@@ -109,8 +120,30 @@ function combineMsg(shareMsg,shareUser) {
         let msg = JSON.parse(JSON.stringify(v));
         msg.name = user[v.userId].name;
         msg.headPic = user[v.userId].headPic;
+        msg.time = dateToStr(v.time);
         return msg;
     });
+}
+
+function deleteMyShare(req,res,next) {
+    ShareMsg.remove({_id:req.query.msgNum,userId:req.query._id},(err) => {
+        if(err) {
+            res.json({code:1,err:'动态删除失败!!!'});
+        }else{
+            res.json({code:0,err:'动态删除成功!!!'});
+        }
+    });
+}
+
+// 将日期对象转为年月日
+function dateToStr(date) {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    return (year + '年 ' + month + '月 ' + day + '日 ' + hour + ':' + minutes);
 }
 
 

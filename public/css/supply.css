@@ -1,0 +1,42 @@
+body{background:#fefefe}
+.login_head_bg{width:100%;height:150px}
+.login_head_bg .login_head{width:990px;height:150px;margin:0 auto;padding-top:32px}
+
+.supply_bg{
+	width:100%;
+	height:550px;
+}
+.supply{
+	width:1000px;
+	height: 550px;
+	border:1px solid #666;
+	margin:0 auto;
+	padding-left: 50px;
+}
+.supply form>p{
+	width:100%;
+	height:50px;
+	padding-top: 10px;
+	font-size: 20px;
+}
+.supply form>p select{
+	width: 68px;
+}
+.supply form>p button{
+	width: 70px;
+	border: 0;
+	margin-left: 10px;
+}
+.supply form>p input[type=file]{
+	display: none;
+}
+.headPic{
+	width: 350px;
+	height:350px;
+	display: none;
+}
+input[type=submit]{
+	font-size: 20px;
+	width: 100px;
+	margin-top: 10px;
+}

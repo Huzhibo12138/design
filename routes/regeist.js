@@ -77,7 +77,7 @@ function saveSendCode(req,res,next) {
         }
     });
     //发送验证码
-    // sendRegCode.sendTplSms(msg._id,msg.code);   //这里需要改为Promise对象
+    sendRegCode.sendTplSms(msg._id,msg.code);   //这里需要改为Promise对象
     // 发送成功信息
     res.json( {code:0,err:'验证码已发送,请注意查收'} );
 }

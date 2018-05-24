@@ -1,19 +1,22 @@
 #!/usr/bin/env node
 
+// 引入主服务器入口文件
 const app = require('../app');
 const http = require('http');
 
-let port = normalizePort(process.env.PORT || '8888');
+let port = normalizePort(process.env.PORT || '80');
+
 app.set('port', port);
 
 const server = http.createServer(app);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+app.listen(port);
+app.on('error', onError);
+app.on('listening',listener);
+
 
 function normalizePort(val) {
-    var port = parseInt(val, 10);
+    let port = parseInt(val, 10);
 
     if (isNaN(port)) {
         return val;
@@ -28,11 +31,7 @@ function onError(error) {
     if (error.syscall !== 'listen') {
         throw error;
     }
-
-    let bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
-
+    let bind = typeof port === 'string' ? '通道 ' + port : '端口 ' + port;
     switch (error.code) {
         case 'EACCES':
             console.error(bind + ' 需要提升权限');
@@ -47,10 +46,8 @@ function onError(error) {
     }
 }
 
-function onListening() {
+function listener() {
     let addr = server.address();
-    let bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr.port;
-    console.log('聊天服务器启动成功@^_^@,正在监听 ' + bind);
+    let bind = typeof addr === 'string' ? '通道 ' + addr : '端口 ' + addr.port;
+    console.log('主务器启动成功(^_^),正在监听 ' + bind);
 }

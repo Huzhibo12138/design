@@ -7,16 +7,11 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 // // 引入数据库
-const mongoose = require('./business/configs/mongoose');
+const mongoose = require('./business/configs/mongoose').chat;
 const db = mongoose();
 
 // 引入路由
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const loginRouter = require('./routes/login');
-const checkRouter = require('./routes/checkPoint');
-const chetRouter = require('./routes/chet');
-const  registerRouter = require('./routes/register');
+
 
 // 实例化express对象
 const app = express();
@@ -51,19 +46,6 @@ app.all('/favicon', (req,res) => {
 });
 
 
-// 登录路由
-app.use('/register', registerRouter);
-// 权限检查路由
-app.all('*', checkRouter);
-// 用户登录路由
-app.use('/', loginRouter);
-app.use('/login', loginRouter);
-// 聊天界面处理路由
-app.use('/chet', chetRouter);
-
-
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 
 // 处理404错误
 app.use(function(req, res, next) {

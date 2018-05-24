@@ -32,15 +32,15 @@ function wirteDb(req,res,next) {
         identity:req.userData.identity,
         newUser:req.userData.newUser,
         follow:req.userData.follow,
+        headPic:req.userData.headPic,
     }
     let loginUser = new LoginUser(userMsg);
     loginUser.save((err) => {
         if(err) {
-            req.session.loginUser = userMsg._id;  // 发送session,记录信息
+            req.session.user = userMsg._id;  // 发送session,记录信息
             res.json({code:1,err:'登录失败,是否已经登录过了?或请重试...'});
         }else{
             res.json({code:0,err:'登录成功',userMsg:userMsg});
-            console.log(userMsg);
         }
     });
 }
@@ -51,6 +51,7 @@ function logOut(req,res,next){
         if(err) {
             console.log(err);
         }else{
+            delete req.session.user;
             res.json({code:0,err:'退出登录成功'});
         }
     });

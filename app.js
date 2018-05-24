@@ -7,15 +7,18 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 // // 连接数据库
-const mongoose = require('./business/configs/mongoose');
+const mongoose = require('./business/configs/mongoose').app;
 const db = mongoose();
 
 // 引入路由
+const checkPoint = require('./routes/checkPoint');
 const indexRouter = require('./routes/index');
 const regeistRouter = require('./routes/regeist');
 const loginRouter = require('./routes/login');
 const followRouter = require('./routes/follow');
 const shareRouter = require('./routes/share');
+const supplyRouter = require('./routes/supply');
+const retrieveRouter = require('./routes/retrive');
 
 
 // 实例化express对象
@@ -32,17 +35,22 @@ app.use(express.urlencoded({ extended: false }));
 // 静态目录设置
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // 解析cookie
 app.use(cookieParser());
+
 app.use(session({
-    secret: 'hbb123456',  //cookie签名
-    name:'chetUser',  //cookie名称
-    cookie:{maxAge: 3600000},  //过期时间
+    secret: 'hzb',  //cookie签名
+    name:'user',  //cookie名称
+    cookie:{maxAge: 1000 * 60 * 60},  //过期时间
     store: new FileStore(),  //本地session存储
     resave: false, //每次都重新保存会话(否)
     saveUninitialized: true,  //自动保存未初始化的会话(否)
 }));
 
+
+// 检查站,检查所有请求是否有权限
+app.all('*',checkPoint);
 // 处理主界面请求
 app.use('/index',indexRouter);
 // 处理注册请求
@@ -53,7 +61,10 @@ app.use('/login',loginRouter);
 app.use('/follow',followRouter);
 // 处理动态请求
 app.use('/share',shareRouter);
-
+// 处理补全信息请求
+app.use('/supply',supplyRouter);
+// 处理修改密码的请求
+app.use('/retrieve',retrieveRouter);
 
 
 app.all('/favicon', (req,res) => {

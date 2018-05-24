@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>星心网</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/public.css">
+<link rel="stylesheet" type="text/css" href="css/retrieve.css">
+</head>
+<body>
+	<div class="login_head_bg">
+        <div class="login_head">
+            <a href="javascript:;">
+                <!-- <img src="img/logo3.jpg"> -->
+            </a>
+        </div>
+    </div>
+    <div class="retrieve_bg">
+    	<div class="retrieve">
+    		<div class="retrieve_con">
+    			<ul class="title">
+    				<li class="active">忘记密码</li>
+    				<li>修改密码</li>
+    			</ul>
+    			<form action="javascript:;" class="form1 formActive">
+    				<p><label>账号:</label><input type="text" class="userId"></p>
+    				<p><button class="btn btn-info getShowMsg">获取验证码</button></p>
+    			</form>
+    			<form action="javascript:;" class="form3">
+    				<p><label>账号:</label><input type="text" class="userId"></p>
+    				<p><label>旧密码:</label><input type="password" class="oldPassword"></p>
+    				<p><label>新密码:</label><input type="password" class="password1"></p>
+    				<p><label>新密码:</label><input type="password" class="password2"></p>
+    				<button class="btn btn-danger submit form3Submit">提交</button>
+    			</form>
+    			<form action="javascript:;" class="form2">
+    				<input type="hidden" class="userId">
+    				<p><label>验证码:</label><input type="text" class="shotMsg"></p>
+    				<p><label>新密码:</label><input type="password" class="pasd1"></p>
+    				<p><label>新密码:</label><input type="password" class="pasd2"></p>
+    				<button class="btn btn-danger submit form2Submit">提交</button>
+    			</form>
+    		</div>
+    	</div>
+    </div>
+    <script type="text/javascript" src="js/public.js"></script>
+    <script type="text/javascript" src="js/retrieve.js"></script>
+</body>
+</html>
