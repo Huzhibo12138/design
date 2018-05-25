@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
+const sessionStore = new MongoStore({
+    url: 'mongodb://localhost/user'
+});
 
 const User = require('../business/models/user');
 const LoginUser = require('../business/models/loginUser');
-// 处理登录请求的流程 1:校验数据,查库 2.用户入登录库
-router.post('/in',checkMsg,wirteDb);
-// 处理退出登录的流程 退出登录
-router.get('/out',logOut);
 
 function checkMsg(req,res,next) {
     // 格式化请求信息
@@ -37,9 +38,9 @@ function wirteDb(req,res,next) {
     let loginUser = new LoginUser(userMsg);
     loginUser.save((err) => {
         if(err) {
-            req.session.user = userMsg._id;  // 发送session,记录信息
             res.json({code:1,err:'登录失败,是否已经登录过了?或请重试...'});
         }else{
+            req.session.user = userMsg._id;  // 发送session,记录信息
             res.json({code:0,err:'登录成功',userMsg:userMsg});
         }
     });

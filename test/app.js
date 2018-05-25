@@ -6,7 +6,7 @@ const path = require('path');
 
 const io = require('socket.io')(server);
 
-server.listen(80,() => {
+server.listen(8888,() => {
     console.log('服务器已启动，正在监听8888端口');
 });
 

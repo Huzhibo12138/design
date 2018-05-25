@@ -10,9 +10,9 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-app.listen(port);
-app.on('error', onError);
-app.on('listening',listener);
+server.listen(port);
+server.on('error', onError);
+server.on('listening',listener);
 
 
 function normalizePort(val) {

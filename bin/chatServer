@@ -1,19 +1,37 @@
 #!/usr/bin/env node
-
-const app = require('../app');
+// 引入主服务器入口文件
+const express = require('express');
 const http = require('http');
+const socket = require('socket.io');
 
-let port = normalizePort(process.env.PORT || '80');
+// 连接数据库
+// const mongoose = require('../business/configs/mongoose').chat;
+// const db = mongoose();
+
+// 引入中间件
+const checkUserMiddleWare = require('../chatMiddleWare/checkUser');
+const connectionNiddleWare = require('../chatMiddleWare/connection');
+
+const app = express();
+let port = normalizePort(process.env.PORT || '8000');
 app.set('port', port);
 
 const server = http.createServer(app);
-
 server.listen(port);
 server.on('error', onError);
-server.on('listening', onListening);
+server.on('listening',listener);
 
+const io = socket(server);
+//
+// // 对socket的连接请求进行身份验证
+io.use(checkUserMiddleWare);
+// 验证通过后的连接请求
+io.on('connection',connectionNiddleWare);
+
+
+// 格式化端口
 function normalizePort(val) {
-    var port = parseInt(val, 10);
+    let port = parseInt(val, 10);
 
     if (isNaN(port)) {
         return val;
@@ -23,16 +41,12 @@ function normalizePort(val) {
     }
     return false;
 }
-
+// 启动失败信息
 function onError(error) {
     if (error.syscall !== 'listen') {
         throw error;
     }
-
-    let bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
-
+    let bind = typeof port === 'string' ? '通道 ' + port : '端口 ' + port;
     switch (error.code) {
         case 'EACCES':
             console.error(bind + ' 需要提升权限');
@@ -46,11 +60,9 @@ function onError(error) {
             throw error;
     }
 }
-
-function onListening() {
+// 启动成功信息
+function listener() {
     let addr = server.address();
-    let bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr.port;
-    console.log('聊天服务器启动成功@^_^@,正在监听 ' + bind);
+    let bind = typeof addr === 'string' ? '通道 ' + addr : '端口 ' + addr.port;
+    console.log('聊天服务器启动成功(^_^),正在监听 ' + bind);
 }

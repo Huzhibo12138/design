@@ -5,10 +5,13 @@ const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+const MongoStore = require('connect-mongo')(session);
+
 
 // // 连接数据库
 const mongoose = require('./business/configs/mongoose').app;
 const db = mongoose();
+
 
 // 引入路由
 const checkPoint = require('./routes/checkPoint');
@@ -37,20 +40,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // 解析cookie
-app.use(cookieParser());
+app.use(cookieParser('hzb'));
 
 app.use(session({
-    secret: 'hzb',  //cookie签名
+    secret:'hzb',  //cookie签名
     name:'user',  //cookie名称
     cookie:{maxAge: 1000 * 60 * 60},  //过期时间
-    store: new FileStore(),  //本地session存储
+    store:  new MongoStore({url:'mongodb://localhost:27017/user'}),  //mongo session存储
     resave: false, //每次都重新保存会话(否)
-    saveUninitialized: true,  //自动保存未初始化的会话(否)
+    saveUninitialized: false,  //自动保存未初始化的会话(否)
 }));
 
 
 // 检查站,检查所有请求是否有权限
-app.all('*',checkPoint);
+app.use('*',checkPoint);
 // 处理主界面请求
 app.use('/index',indexRouter);
 // 处理注册请求
